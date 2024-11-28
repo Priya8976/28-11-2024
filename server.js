@@ -1,19 +1,20 @@
-const http = require("http");
+// 
+const express = required("express");
+const app = express();
 
-const server = http.createServer((req, res)=> {
-    if (req.url=== "/" && req.method === "GET") {
-        res.write("Hello world");
-        res.end();
-    } else if (req.url ==="/date" && req.method === "GET"){
-        res.write(new Date().toString());
-        res.end();
-    } else { 
-        res.write("Not found")
-        res.end();
-    }
+app.get("/",(req, res) => {
+    res.send("Hello world");
+});
+
+app.get("/date", (req, res) => {
+    res.send(new Date().toString());
+});
+
+app.use((req,res) => {
+    res.status(404).send("page not found");
 });
 
 const PORT = 3000;
-server.listen(PORT,() =>{
-     console.log(`server is running on port ${PORT}`);
- });
+app.listen(PORT, () => {
+    console.log(`server is running on port ${PORT}`);
+});
